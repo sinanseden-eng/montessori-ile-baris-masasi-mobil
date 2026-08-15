@@ -315,7 +315,14 @@ function renderScene(scene, kind) {
   return `
     <article class="scene-screen ${kind}">
       <div class="scene-visual">
-        <img src="${isRight ? scene.rightImage : scene.wrongImage}" alt="${escapeHtml(scene.label)} — ${isRight ? "Montessori yaklaşımı" : "geleneksel yaklaşım"}" />
+        <img
+          src="${isRight ? scene.rightImage : scene.wrongImage}"
+          width="1672"
+          height="941"
+          alt="${escapeHtml(scene.label)} — ${isRight ? "Montessori yaklaşımı" : "geleneksel yaklaşım"}"
+          decoding="async"
+          draggable="false"
+        />
         <div class="approach-label"><i aria-hidden="true">${isRight ? "✓" : "×"}</i>${label}</div>
       </div>
       <div class="dialogue-card" key="${kind}-${state.lineIndex}">
