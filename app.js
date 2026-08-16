@@ -271,6 +271,13 @@ function speakerInitial(name) {
   return name === "Öğretmen" ? "M" : name.slice(0, 1).toLocaleUpperCase("tr-TR");
 }
 
+const girlSpeakers = new Set(["Elif", "Selin", "Duru", "Ece", "Deniz"]);
+
+function speakerPlacement(name) {
+  if (name === "Öğretmen") return "speaker-teacher";
+  return girlSpeakers.has(name) ? "speaker-right" : "speaker-left";
+}
+
 function preloadScenario(index) {
   const scene = scenarios[index];
   if (!scene) return;
@@ -315,23 +322,27 @@ function renderScene(scene, kind) {
   return `
     <article class="scene-screen ${kind}">
       <div class="scene-visual">
-        <img
-          src="${isRight ? scene.rightImage : scene.wrongImage}"
-          width="1672"
-          height="941"
-          alt="${escapeHtml(scene.label)} — ${isRight ? "Montessori yaklaşımı" : "geleneksel yaklaşım"}"
-          decoding="async"
-          draggable="false"
-        />
-        <div class="approach-label"><i aria-hidden="true">${isRight ? "✓" : "×"}</i>${label}</div>
-      </div>
-      <div class="dialogue-card" key="${kind}-${state.lineIndex}">
-        <div class="speaker-line">
-          <span aria-hidden="true">${speakerInitial(line.speaker)}</span>
-          <div><b>${escapeHtml(line.speaker)}</b><small>${escapeHtml(line.role)}</small></div>
+        <img class="scene-backdrop" src="${isRight ? scene.rightImage : scene.wrongImage}" alt="" aria-hidden="true" />
+        <div class="scene-art">
+          <img
+            class="scene-image"
+            src="${isRight ? scene.rightImage : scene.wrongImage}"
+            width="1672"
+            height="941"
+            alt="${escapeHtml(scene.label)} — ${isRight ? "Montessori yaklaşımı" : "geleneksel yaklaşım"}"
+            decoding="async"
+            draggable="false"
+          />
+          <div class="approach-label"><i aria-hidden="true">${isRight ? "✓" : "×"}</i>${label}</div>
+          <div class="comic-bubble ${speakerPlacement(line.speaker)}" key="${kind}-${state.lineIndex}">
+            <div class="speaker-line">
+              <span aria-hidden="true">${speakerInitial(line.speaker)}</span>
+              <div><b>${escapeHtml(line.speaker)}</b><small>${escapeHtml(line.role)}</small></div>
+            </div>
+            <div class="dialogue-index">${state.lineIndex + 1} / ${lines.length}</div>
+            <p>${escapeHtml(line.text)}</p>
+          </div>
         </div>
-        <div class="dialogue-index">${state.lineIndex + 1} / ${lines.length}</div>
-        <p>${escapeHtml(line.text)}</p>
       </div>
     </article>`;
 }
