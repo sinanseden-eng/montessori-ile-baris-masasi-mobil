@@ -304,7 +304,7 @@ function renderDots() {
 
 function renderSituation(scene) {
   return `
-    <article class="situation-screen" style="--scene:${scene.color};--scene-soft:${scene.soft}">
+    <article class="situation-screen scene-photo-page" style="--scene:${scene.color};--scene-soft:${scene.soft};--scene-photo:url('${scene.wrongImage}')">
       <div class="situation-number"><span>${scene.number}</span><i aria-hidden="true">${scene.icon}</i></div>
       <small>Durum ortaya çıkıyor · ${escapeHtml(scene.label)}</small>
       <h2>${escapeHtml(scene.title)}</h2>
@@ -359,7 +359,7 @@ function renderBridge(scene) {
 
 function renderInsight(scene) {
   return `
-    <article class="insight-screen">
+    <article class="insight-screen scene-photo-page" style="--scene:${scene.color};--scene-photo:url('${scene.rightImage}')">
       <div class="insight-mark" aria-hidden="true">✦</div>
       <small>Montessori bağlantısı</small>
       <h2>${escapeHtml(scene.principle)}</h2>
